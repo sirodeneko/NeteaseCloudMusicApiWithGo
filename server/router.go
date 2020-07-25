@@ -18,10 +18,12 @@ func NewRouter() *gin.Engine {
 	r.Use(middleware.CurrentUser())
 
 	// 路由
-	v1 := r.Group("/api/v1")
+	v1 := r.Group("/")
 	{
 		v1.POST("ping", api.Ping)
-
+		v1.GET("album", api.Ping)
+		v1.GET("album/sublist", api.Ping)
+		v1.GET("login/status", api.LoginStatus)
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
 
