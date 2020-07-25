@@ -3,6 +3,7 @@ module singo
 go 1.12
 
 require (
+	github.com/asmcos/requests v0.0.0-20200725080539-508ff1c69720
 	github.com/forgoer/openssl v0.0.0-20200331032942-ad9f8d57d8b1
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-contrib/sessions v0.0.0-20190512062852-3cb4c4f2d615
