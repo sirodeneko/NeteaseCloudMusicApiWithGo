@@ -23,9 +23,6 @@ func NewRouter() *gin.Engine {
 		v1.POST("ping", api.Ping)
 
 		// 用户登录
-		v1.POST("user/register", api.UserRegister)
-
-		// 用户登录
 		v1.POST("user/login", api.UserLogin)
 
 		// 需要登录保护的
