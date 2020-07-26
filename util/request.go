@@ -1,10 +1,16 @@
 package util
 
 import (
-	"fmt"
+	"bytes"
+	"compress/zlib"
+	"encoding/json"
 	"github.com/asmcos/requests"
+	"io"
 	"math/rand"
 	"net/http"
+	"regexp"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -12,6 +18,8 @@ type Options struct {
 	Crypto  string
 	Ua      string
 	Cookies []*http.Cookie
+	Token   string
+	Url     string
 }
 
 func chooseUserAgent(ua string) string {
@@ -33,16 +41,120 @@ func chooseUserAgent(ua string) string {
 	}
 
 	rand.Seed(time.Now().UnixNano())
-	var index = 0
-	if ua == '' {
-
+	index := 0
+	if ua == "" {
+		index = rand.Intn(len(userAgentList))
+	} else if ua == "mobile" {
+		index = rand.Intn(8)
+	} else {
+		index = rand.Intn(7) + 8
 	}
+	return userAgentList[index]
 }
 
-func main() {
-	resp, err := requests.Get("http://www.zhanluejia.net.cn")
-	if err != nil {
-		return
+func CreateRequest(method string, url string, data map[string]string, options *Options) (map[string]interface{}, []*http.Cookie) {
+	req := requests.Requests()
+	req.Header.Set("User-Agent", chooseUserAgent(options.Ua))
+	csrfToken := ""
+	music_U := ""
+	answer := map[string]interface{}{}
+
+
+
+	if method == "POST" {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
-	fmt.Println(resp.Text())
+	if strings.Contains(url, "music.163.com") {
+		req.Header.Set("Referer", "https://music.163.com")
+	}
+	if options.Cookies != nil {
+		for _, cookie := range options.Cookies {
+			req.SetCookie(cookie)
+			if cookie.Name == "__csrf" {
+				csrfToken = cookie.Value
+			}
+			if cookie.Name == "MUSIC_U" {
+				music_U = cookie.Value
+			}
+		}
+	}
+	if options.Crypto == "weapi" {
+		data["csrf_token"] = csrfToken
+		data = Weapi(data)
+		reg, _ := regexp.Compile(`/\w*api/`)
+		url = reg.ReplaceAllString(url, "weapi")
+	} else if options.Crypto == "linuxapi" {
+		linuxApiData := make(map[string]interface{}, 3)
+		linuxApiData["method"] = method
+		reg, _ := regexp.Compile(`/\w*api/`)
+		linuxApiData["url"] = reg.ReplaceAllString(url, "api")
+		linuxApiData["params"] = data
+		data = Linuxapi(linuxApiData)
+		req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
+		url = "https://music.163.com/api/linux/forward"
+	} else if options.Crypto == "eapi" {
+		eapiData := make(map[string]interface{})
+		for key, value := range data {
+			eapiData[key] = value
+		}
+		rand.Seed(time.Now().UnixNano())
+		header := map[string]string{
+			"osver":       "",
+			"deviceId":    "",
+			"mobilename":  "",
+			"appver":      "6.1.1",
+			"versioncode": "140",
+			"buildver":    strconv.FormatInt(time.Now().Unix(), 10),
+			"resolution":  "1920x1080",
+			"os":          "android",
+			"channel":     "",
+			"requestId":   strconv.FormatInt(time.Now().Unix()*1000, 10) + strconv.Itoa(rand.Intn(1000)),
+			"MUSIC_U":     music_U,
+		}
+
+		for key, value := range header {
+			req.SetCookie(&http.Cookie{Name: key, Value: value, Path: "/",})
+		}
+		eapiData["header"] = header
+		data = Eapi(options.Url, eapiData)
+		reg, _ := regexp.Compile(`/\w*api/`)
+		url = reg.ReplaceAllString(url, "eapi")
+	}
+	var resp *requests.Response
+	var err error
+	if method == "POST" {
+		var form requests.Datas = data
+		resp, err = req.Post(url, form)
+	} else {
+		resp, err = req.Get(url)
+	}
+
+	if err != nil {
+		answer["code"] = 520
+		answer["err"] = err.Error()
+		return answer, nil
+	}
+	cookies := resp.Cookies()
+
+
+	body := resp.Content()
+	b := bytes.NewReader(body)
+	var out bytes.Buffer
+	r, err := zlib.NewReader(b)
+	// 数据被压缩 进行解码
+	if err == nil {
+		io.Copy(&out, r)
+		body = out.Bytes()
+	}
+
+	err = json.Unmarshal(body, &answer)
+	if err != nil {
+		answer["code"] = 500
+		answer["err"] = err.Error()
+		return answer, nil
+	}
+	if _, ok := answer["code"];!ok{
+		answer["code"]=200
+	}
+	return answer, cookies
 }

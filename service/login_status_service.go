@@ -1,33 +1,29 @@
 package service
 
 import (
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"singo/model"
-	"singo/serializer"
+	"singo/util"
 )
 
 // LoginStatusService
 type LoginStatusService struct{}
 
-func (service *LoginStatusService) LoginStatus(c *gin.Context) serializer.Response {
+func (service *LoginStatusService) LoginStatus(c *gin.Context) map[string]interface{} {
 
 	// 获得所有cookie
 	cookies := c.Request.Cookies()
-	c
 
-	var user model.User
+	options:=&util.Options{
+		Crypto:  "",
+		Ua:      "",
+		Cookies: cookies,
+	}
+	data:=make(map[string]string)
+	reBody,cookies:=util.CreateRequest("GET",`https://music.163.com`,data,options)
 
-	if err := model.DB.Where("user_name = ?", service.UserName).First(&user).Error; err != nil {
-		return serializer.ParamErr("账号或密码错误", nil)
+	for _,cookie:=range cookies{
+		c.SetCookie(cookie.Name,cookie.Value,60*60*24,"",cookie.Domain,false,false)
 	}
 
-	if user.CheckPassword(service.Password) == false {
-		return serializer.ParamErr("账号或密码错误", nil)
-	}
-
-	// 设置session
-	service.setSession(c, user)
-
-	return serializer.BuildUserResponse(user)
+	return reBody
 }
