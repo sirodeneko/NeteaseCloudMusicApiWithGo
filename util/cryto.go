@@ -93,7 +93,7 @@ func rsaEncrypt(buffer []byte, key []byte) []byte {
 
 func Weapi(data map[string]string) map[string]string {
 	text, _ := json.Marshal(data)
-	fmt.Println(string(text))
+	//fmt.Println(string(text))
 	secretKey, reSecretKey := NewLen16Rand()
 	//secretKey,_=hex.DecodeString("3554324955624839667a7679634f3372")
 	//reSecretKey,_=hex.DecodeString("72334f6379767a663948625549325435")
@@ -112,6 +112,7 @@ func Linuxapi(data map[string]interface{}) map[string]string {
 
 func Eapi(url string, data map[string]interface{}) map[string]string {
 	textByte, _ := json.Marshal(data)
+	fmt.Println(string(textByte))
 	message := "nobody" + url + "use" + string(textByte) + "md5forencrypt"
 	h := md5.New()
 	h.Write([]byte(message))

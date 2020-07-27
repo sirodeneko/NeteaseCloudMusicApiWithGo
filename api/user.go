@@ -37,3 +37,25 @@ func UserUpdate(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取用户歌单
+func UserPlaylist(c *gin.Context) {
+	var service service.UserPlaylistService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserPlaylist(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 更新歌单描述
+func PlaylistDescUpdate(c *gin.Context) {
+	var service service.PlaylistDescUpdateService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistDescUpdate(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

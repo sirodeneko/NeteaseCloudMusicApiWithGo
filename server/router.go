@@ -37,6 +37,9 @@ func NewRouter() *gin.Engine {
 		v1.GET("user/subcount", api.UserSubcount)
 		v1.GET("user/update", api.UserUpdate)
 		v1.GET("countries/code/list", api.CountriesCodeList)
+		v1.GET("user/playlist", api.UserPlaylist)
+		v1.GET("user/playlist/update", api.PlaylistUpdate)
+		v1.GET("playlist/desc/update", api.PlaylistDescUpdate)
 
 		// 需要登录保护的
 		auth := v1.Group("")
