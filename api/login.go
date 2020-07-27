@@ -48,3 +48,14 @@ func LoginRefresh(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 退出登录
+func Logout(c *gin.Context) {
+	var service service.LogoutService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.Logout(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

@@ -5,11 +5,11 @@ import (
 	"singo/service"
 )
 
-// 检查手机是否已经注册
-func CellphoneExistenceCheck(c *gin.Context) {
-	var service service.CellphoneExistenceCheckService
+// 注册后初始化昵称
+func ActivateInitProfile(c *gin.Context) {
+	var service service.ActivateInitProfileService
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.CellphoneExistenceCheck(c)
+		res := service.ActivateInitProfile(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))

@@ -5,11 +5,11 @@ import (
 	"singo/service"
 )
 
-// 检查手机是否已经注册
-func CellphoneExistenceCheck(c *gin.Context) {
-	var service service.CellphoneExistenceCheckService
+// 国家编码列表
+func CountriesCodeList(c *gin.Context) {
+	var service service.CountriesCodeListService
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.CellphoneExistenceCheck(c)
+		res := service.CountriesCodeList(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))

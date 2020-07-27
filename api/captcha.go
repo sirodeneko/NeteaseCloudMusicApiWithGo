@@ -5,6 +5,7 @@ import (
 	"singo/service"
 )
 
+// 发送验证码
 func CaptchaSent(c *gin.Context) {
 	var service service.CaptchaSentService
 	if err := c.ShouldBind(&service); err == nil {
@@ -15,6 +16,7 @@ func CaptchaSent(c *gin.Context) {
 	}
 }
 
+// 验证验证码
 func CaptchaVerify(c *gin.Context) {
 	var service service.CaptchaVerifyService
 	if err := c.ShouldBind(&service); err == nil {

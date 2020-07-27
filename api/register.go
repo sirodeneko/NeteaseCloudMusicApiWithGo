@@ -5,6 +5,7 @@ import (
 	"singo/service"
 )
 
+// 手机注册
 func RegisterCellphone(c *gin.Context) {
 	var service service.RegisterCellphoneService
 	if err := c.ShouldBind(&service); err == nil {

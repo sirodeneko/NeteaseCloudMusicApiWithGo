@@ -30,6 +30,13 @@ func NewRouter() *gin.Engine {
 		v1.GET("captcha/verify", api.CaptchaVerify)
 		v1.GET("register/cellphone", api.RegisterCellphone)
 		v1.GET("cellphone/existence/check", api.CellphoneExistenceCheck)
+		v1.GET("activate/init/profile", api.ActivateInitProfile)
+		v1.GET("rebind", api.Rebind)
+		v1.GET("logout", api.Logout)
+		v1.GET("user/detail", api.UserDetail)
+		v1.GET("user/subcount", api.UserSubcount)
+		v1.GET("user/update", api.UserUpdate)
+		v1.GET("countries/code/list", api.CountriesCodeList)
 
 		// 需要登录保护的
 		auth := v1.Group("")
