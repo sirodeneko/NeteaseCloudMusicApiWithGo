@@ -1,6 +1,8 @@
 # NeteaseCloudMusicApiWithGo
 
-本项目基于[网易云音乐 API](https://github.com/Binaryify/NeteaseCloudMusicApi) 重新用golang实现（开发中）
+本项目基于[网易云音乐 API](https://github.com/Binaryify/NeteaseCloudMusicApi) 重新用golang实现  
+网易云api Golng 版（开发中已完成基本的请求解码编码模块）  
+
 
 ## Go Mod
 

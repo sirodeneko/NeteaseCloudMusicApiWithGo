@@ -15,3 +15,14 @@ func LoginStatus(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 手机登录
+func LoginCellphone(c *gin.Context) {
+	var service service.LoginCellphoneService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.LoginCellphone(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

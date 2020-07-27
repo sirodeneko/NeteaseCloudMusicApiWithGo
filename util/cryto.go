@@ -93,28 +93,31 @@ func rsaEncrypt(buffer []byte, key []byte) []byte {
 
 func Weapi(data map[string]string) map[string]string {
 	text, _ := json.Marshal(data)
+	fmt.Println(string(text))
 	secretKey, reSecretKey := NewLen16Rand()
-	weapiType:=make(map[string]string,2)
-	weapiType["params"]=base64.StdEncoding.EncodeToString(aesEncrypt(aesEncrypt(text, "cbc", presetKey, iv), "cbc", secretKey, iv))
-	weapiType["encSecKey"]=hex.EncodeToString(rsaEncrypt(reSecretKey, publicKey))
+	//secretKey,_=hex.DecodeString("3554324955624839667a7679634f3372")
+	//reSecretKey,_=hex.DecodeString("72334f6379767a663948625549325435")
+	weapiType := make(map[string]string, 2)
+	weapiType["params"] = base64.StdEncoding.EncodeToString(aesEncrypt([]byte(base64.StdEncoding.EncodeToString(aesEncrypt(text, "cbc", presetKey, iv))), "cbc", reSecretKey, iv))
+	weapiType["encSecKey"] = hex.EncodeToString(rsaEncrypt(secretKey, publicKey))
 	return weapiType
 }
 
-func Linuxapi(data map[string]interface{}) map[string]string{
+func Linuxapi(data map[string]interface{}) map[string]string {
 	text, _ := json.Marshal(data)
-	linuxapiType:=make(map[string]string,1)
-	linuxapiType["params"]=strings.ToUpper(hex.EncodeToString(aesEncrypt(text,"ecb", linuxapiKey,nil)))
+	linuxapiType := make(map[string]string, 1)
+	linuxapiType["params"] = strings.ToUpper(hex.EncodeToString(aesEncrypt(text, "ecb", linuxapiKey, nil)))
 	return linuxapiType
 }
 
-func Eapi(url string,data map[string]interface{}) map[string]string{
-	textByte,_:=json.Marshal(data)
-	message:="nobody"+url+string(textByte)+"md5forencrypt"
+func Eapi(url string, data map[string]interface{}) map[string]string {
+	textByte, _ := json.Marshal(data)
+	message := "nobody" + url + string(textByte) + "md5forencrypt"
 	h := md5.New()
 	h.Write([]byte(message))
-	digest:=hex.EncodeToString(h.Sum(nil))
-	dd:=url+"-36cd479b6b5-"+string(textByte)+"-36cd479b6b5-"+digest
-	eapiType:=make(map[string]string,1)
-	eapiType["params"]=strings.ToUpper(hex.EncodeToString(aesEncrypt([]byte(dd),"ecb", eapiKey,nil)))
+	digest := hex.EncodeToString(h.Sum(nil))
+	dd := url + "-36cd479b6b5-" + string(textByte) + "-36cd479b6b5-" + digest
+	eapiType := make(map[string]string, 1)
+	eapiType["params"] = strings.ToUpper(hex.EncodeToString(aesEncrypt([]byte(dd), "ecb", eapiKey, nil)))
 	return eapiType
 }

@@ -47,7 +47,7 @@ func chooseUserAgent(ua string) string {
 	} else if ua == "mobile" {
 		index = rand.Intn(8)
 	} else {
-		index = rand.Intn(7) + 8
+		index = rand.Intn(7) + 7
 	}
 	return userAgentList[index]
 }
@@ -58,8 +58,6 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 	csrfToken := ""
 	music_U := ""
 	answer := map[string]interface{}{}
-
-
 
 	if method == "POST" {
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -82,12 +80,12 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 		data["csrf_token"] = csrfToken
 		data = Weapi(data)
 		reg, _ := regexp.Compile(`/\w*api/`)
-		url = reg.ReplaceAllString(url, "weapi")
+		url = reg.ReplaceAllString(url, "/weapi/")
 	} else if options.Crypto == "linuxapi" {
 		linuxApiData := make(map[string]interface{}, 3)
 		linuxApiData["method"] = method
 		reg, _ := regexp.Compile(`/\w*api/`)
-		linuxApiData["url"] = reg.ReplaceAllString(url, "api")
+		linuxApiData["url"] = reg.ReplaceAllString(url, "/api/")
 		linuxApiData["params"] = data
 		data = Linuxapi(linuxApiData)
 		req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
@@ -113,12 +111,12 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 		}
 
 		for key, value := range header {
-			req.SetCookie(&http.Cookie{Name: key, Value: value, Path: "/",})
+			req.SetCookie(&http.Cookie{Name: key, Value: value, Path: "/"})
 		}
 		eapiData["header"] = header
 		data = Eapi(options.Url, eapiData)
 		reg, _ := regexp.Compile(`/\w*api/`)
-		url = reg.ReplaceAllString(url, "eapi")
+		url = reg.ReplaceAllString(url, "/eapi/")
 	}
 	var resp *requests.Response
 	var err error
@@ -129,6 +127,7 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 		resp, err = req.Get(url)
 	}
 
+	resp.ResponseDebug()
 	if err != nil {
 		answer["code"] = 520
 		answer["err"] = err.Error()
@@ -136,8 +135,8 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 	}
 	cookies := resp.Cookies()
 
-
 	body := resp.Content()
+	//fmt.Println(string(body))
 	b := bytes.NewReader(body)
 	var out bytes.Buffer
 	r, err := zlib.NewReader(b)
@@ -148,13 +147,21 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 	}
 
 	err = json.Unmarshal(body, &answer)
+	// 出错说明不是json
 	if err != nil {
+		//fmt.Println(string(body))
+		// 可能是纯页面
+		if strings.Index(string(body), "<!DOCTYPE html>") != -1 {
+			answer["code"] = 200
+			answer["html"] = string(body)
+			return answer, cookies
+		}
 		answer["code"] = 500
 		answer["err"] = err.Error()
 		return answer, nil
 	}
-	if _, ok := answer["code"];!ok{
-		answer["code"]=200
+	if _, ok := answer["code"]; !ok {
+		answer["code"] = 200
 	}
 	return answer, cookies
 }

@@ -21,19 +21,18 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("/")
 	{
 		v1.POST("ping", api.Ping)
-		v1.GET("album", api.Ping)
 		v1.GET("album/sublist", api.Ping)
+
 		v1.GET("login/status", api.LoginStatus)
-		// 用户登录
-		v1.POST("user/login", api.UserLogin)
+		v1.GET("login/cellphone", api.LoginCellphone)
 
 		// 需要登录保护的
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
 		{
 			// User Routing
-			auth.GET("user/me", api.UserMe)
-			auth.DELETE("user/logout", api.UserLogout)
+			//auth.GET("user/me", api.UserMe)
+			//auth.DELETE("user/logout", api.UserLogout)
 		}
 	}
 	return r
