@@ -112,7 +112,7 @@ func Linuxapi(data map[string]interface{}) map[string]string {
 
 func Eapi(url string, data map[string]interface{}) map[string]string {
 	textByte, _ := json.Marshal(data)
-	message := "nobody" + url + string(textByte) + "md5forencrypt"
+	message := "nobody" + url + "use" + string(textByte) + "md5forencrypt"
 	h := md5.New()
 	h.Write([]byte(message))
 	digest := hex.EncodeToString(h.Sum(nil))

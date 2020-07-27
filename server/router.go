@@ -21,10 +21,15 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("/")
 	{
 		v1.POST("ping", api.Ping)
-		v1.GET("album/sublist", api.Ping)
 
 		v1.GET("login/status", api.LoginStatus)
 		v1.GET("login/cellphone", api.LoginCellphone)
+		v1.GET("login", api.LoginEmail)
+		v1.GET("login/refresh", api.LoginRefresh)
+		v1.GET("captcha/sent", api.CaptchaSent)
+		v1.GET("captcha/verify", api.CaptchaVerify)
+		v1.GET("register/cellphone", api.RegisterCellphone)
+		v1.GET("cellphone/existence/check", api.CellphoneExistenceCheck)
 
 		// 需要登录保护的
 		auth := v1.Group("")
