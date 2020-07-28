@@ -49,11 +49,44 @@ func UserPlaylist(c *gin.Context) {
 	}
 }
 
-// 更新歌单描述
-func PlaylistDescUpdate(c *gin.Context) {
-	var service service.PlaylistDescUpdateService
+// 获取用户电台
+func UserDj(c *gin.Context) {
+	var service service.UserDjService
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.PlaylistDescUpdate(c)
+		res := service.UserDj(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取用户关注列表
+func UserFollows(c *gin.Context) {
+	var service service.UserFollowsService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserFollows(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取用户粉丝列表
+func UserFolloweds(c *gin.Context) {
+	var service service.UserFollowedsService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserFolloweds(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取用户动态
+func UserEvent(c *gin.Context) {
+	var service service.UserEventService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserEvent(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))

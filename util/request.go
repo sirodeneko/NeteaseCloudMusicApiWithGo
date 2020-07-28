@@ -127,7 +127,6 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 		resp, err = req.Get(url)
 	}
 
-	resp.ResponseDebug()
 	if err != nil {
 		answer["code"] = 520
 		answer["err"] = err.Error()

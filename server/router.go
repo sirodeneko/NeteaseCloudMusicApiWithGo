@@ -40,6 +40,16 @@ func NewRouter() *gin.Engine {
 		v1.GET("user/playlist", api.UserPlaylist)
 		v1.GET("user/playlist/update", api.PlaylistUpdate)
 		v1.GET("playlist/desc/update", api.PlaylistDescUpdate)
+		v1.GET("playlist/name/update", api.PlaylistNameUpdate)
+		v1.GET("playlist/tags/update", api.PlaylistTagsUpdate)
+		v1.GET("playlist/order/update", api.PlaylistOrderUpdate)
+		v1.GET("song/order/update", api.SongOrderUpdate)
+		v1.GET("user/dj", api.UserDj)
+		v1.GET("user/follows", api.UserFollows)
+		v1.GET("user/followeds", api.UserFolloweds)
+		v1.GET("user/event", api.UserEvent)
+		v1.GET("event/forward", api.EventForward)
+		v1.GET("event/del", api.EventDel)
 
 		// 需要登录保护的
 		auth := v1.Group("")
