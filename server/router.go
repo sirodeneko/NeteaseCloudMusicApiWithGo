@@ -50,6 +50,15 @@ func NewRouter() *gin.Engine {
 		v1.GET("user/event", api.UserEvent)
 		v1.GET("event/forward", api.EventForward)
 		v1.GET("event/del", api.EventDel)
+		v1.GET("share/resource", api.ShareResource)
+		v1.GET("comment/event", api.CommentEvent)
+		v1.GET("follow", api.Follow)
+		v1.GET("user/record", api.UserRecord)
+		v1.GET("hot/topic", api.HotTopic)
+		v1.GET("comment/hotwall/list", api.CommentHotwallList)
+		v1.GET("playmode/intelligence/list", api.PlaymodeIntelligenceList)
+		v1.GET("event", api.Event)
+		v1.GET("artist/list", api.ArtistList)
 
 		// 需要登录保护的
 		auth := v1.Group("")

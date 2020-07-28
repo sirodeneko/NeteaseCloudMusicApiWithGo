@@ -92,3 +92,14 @@ func UserEvent(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取用户历史播放
+func UserRecord(c *gin.Context) {
+	var service service.UserRecordService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserRecord(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
