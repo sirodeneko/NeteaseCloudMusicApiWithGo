@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"compress/zlib"
 	"encoding/json"
+	"fmt"
 	"github.com/asmcos/requests"
 	"io"
 	"math/rand"
@@ -157,6 +158,7 @@ func CreateRequest(method string, url string, data map[string]string, options *O
 		}
 		answer["code"] = 500
 		answer["err"] = err.Error()
+		fmt.Println(string(body))
 		return answer, nil
 	}
 	if _, ok := answer["code"]; !ok {

@@ -106,7 +106,7 @@ func Weapi(data map[string]string) map[string]string {
 func Linuxapi(data map[string]interface{}) map[string]string {
 	text, _ := json.Marshal(data)
 	linuxapiType := make(map[string]string, 1)
-	linuxapiType["params"] = strings.ToUpper(hex.EncodeToString(aesEncrypt(text, "ecb", linuxapiKey, nil)))
+	linuxapiType["eparams"] = strings.ToUpper(hex.EncodeToString(aesEncrypt(text, "ecb", linuxapiKey, nil)))
 	return linuxapiType
 }
 

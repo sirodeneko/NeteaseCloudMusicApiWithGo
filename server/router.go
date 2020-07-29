@@ -59,6 +59,18 @@ func NewRouter() *gin.Engine {
 		v1.GET("playmode/intelligence/list", api.PlaymodeIntelligenceList)
 		v1.GET("event", api.Event)
 		v1.GET("artist/list", api.ArtistList)
+		v1.GET("artist/sub", api.ArtistSub)
+		v1.GET("artist/top/song", api.ArtistTopSong)
+		v1.GET("artist/sublist", api.ArtistSublist)
+		v1.GET("video/sub", api.VideoSub)
+		v1.GET("mv/sub", api.MvSub)
+		v1.GET("mv/sublist", api.MvSublist)
+		v1.GET("playlist/catlist", api.PlaylistCatlist)
+		v1.GET("playlist/hot", api.PlaylistHot)
+		v1.GET("top/playlist", api.TopPlaylist)
+		v1.GET("top/playlist/highquality", api.TopPlaylistHighquality)
+		v1.GET("related/playlist", api.RelatedPlaylist)
+		v1.GET("playlist/detail", api.PlaylistDetail)
 
 		// 需要登录保护的
 		auth := v1.Group("")

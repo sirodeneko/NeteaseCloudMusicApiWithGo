@@ -59,3 +59,36 @@ func PlaylistOrderUpdate(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取歌单分类
+func PlaylistCatlist(c *gin.Context) {
+	var service service.PlaylistCatlistService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistCatlist(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 热门歌单分类
+func PlaylistHot(c *gin.Context) {
+	var service service.PlaylistHotService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistHot(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 歌单详情
+func PlaylistDetail(c *gin.Context) {
+	var service service.PlaylistDetailService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistDetail(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
