@@ -92,3 +92,58 @@ func PlaylistDetail(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 创建歌单
+func PlaylistCreate(c *gin.Context) {
+	var service service.PlaylistCreateService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistCreate(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 删除歌单
+func PlaylistDelete(c *gin.Context) {
+	var service service.PlaylistDeleteService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistDelete(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 收藏歌单
+func PlaylistSubscribe(c *gin.Context) {
+	var service service.PlaylistSubscribeService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistSubscribe(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 歌单收藏者
+func PlaylistSubscribers(c *gin.Context) {
+	var service service.PlaylistSubscribersService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistSubscribers(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 添加或者删除歌曲
+func PlaylistTracks(c *gin.Context) {
+	var service service.PlaylistTracksService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PlaylistTracks(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

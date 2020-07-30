@@ -26,3 +26,14 @@ func TopPlaylistHighquality(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 新歌速递
+func TopSong(c *gin.Context) {
+	var service service.TopSongService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.TopSong(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

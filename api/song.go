@@ -15,3 +15,14 @@ func SongOrderUpdate(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取音乐的url
+func SongUrl(c *gin.Context) {
+	var service service.SongUrlService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.SongUrl(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
