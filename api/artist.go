@@ -48,3 +48,47 @@ func ArtistSublist(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取歌手的歌曲
+func Artists(c *gin.Context) {
+	var service service.ArtistsService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.Artists(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取歌手MV
+func ArtistMv(c *gin.Context) {
+	var service service.ArtistMvService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ArtistMv(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取歌手专辑
+func ArtistAlbum(c *gin.Context) {
+	var service service.ArtistAlbumService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ArtistAlbum(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取歌手描述
+func ArtistDesc(c *gin.Context) {
+	var service service.ArtistDescService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ArtistDesc(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
