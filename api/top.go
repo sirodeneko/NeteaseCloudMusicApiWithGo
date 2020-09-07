@@ -37,3 +37,14 @@ func TopSong(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 新碟上架
+func TopAlbum(c *gin.Context) {
+	var service service.TopAlbumService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.TopAlbum(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

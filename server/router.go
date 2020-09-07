@@ -120,6 +120,10 @@ func NewRouter() *gin.Engine {
 		v1.GET("personal_fm", api.PersonalFm)
 		v1.GET("daily_signin", api.DailySignin)
 		v1.GET("like", api.Like)
+		v1.GET("likelist", api.LikeList)
+		v1.GET("fm_trash", api.FmTrash)
+		v1.GET("top/album", api.TopAlbum)
+		v1.GET("album/new", api.AlbumNew)
 
 		// 需要登录保护的
 		auth := v1.Group("")

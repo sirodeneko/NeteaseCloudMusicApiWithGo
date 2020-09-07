@@ -48,3 +48,14 @@ func AlbumSublist(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 全部新碟
+func AlbumNew(c *gin.Context) {
+	var service service.AlbumNewService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlbumNew(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
