@@ -26,3 +26,69 @@ func MvSublist(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 全部mv
+func MvAll(c *gin.Context) {
+	var service service.MvAllService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvAll(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 最新mv
+func MvFirst(c *gin.Context) {
+	var service service.MvFirstService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvFirst(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 网易出品mv
+func MvExclusiveRcmd(c *gin.Context) {
+	var service service.MvExclusiveRcmdService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvExclusiveRcmd(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取mv详细数据
+func MvDetail(c *gin.Context) {
+	var service service.MvDetailService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvDetail(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 获取 mv 点赞转发评论数数据
+func MvDetailInfo(c *gin.Context) {
+	var service service.MvDetailInfoService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvDetailInfo(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// mv地址
+func MvUrl(c *gin.Context) {
+	var service service.MvUrlService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.MvUrl(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

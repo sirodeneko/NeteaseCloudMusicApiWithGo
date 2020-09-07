@@ -48,3 +48,25 @@ func TopAlbum(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 热门歌手
+func TopArtists(c *gin.Context) {
+	var service service.TopArtistsService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.TopArtists(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// mv排行
+func TopMv(c *gin.Context) {
+	var service service.TopMvService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.TopMv(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
