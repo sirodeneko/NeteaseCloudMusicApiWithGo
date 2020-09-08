@@ -140,6 +140,10 @@ func NewRouter() *gin.Engine {
 		v1.GET("mv/detail", api.MvDetail)
 		v1.GET("mv/detail/info", api.MvDetailInfo)
 		v1.GET("mv/url", api.MvUrl)
+		v1.GET("video/group", api.VideoGroup)
+		v1.GET("video/timeline/all", api.VideoTimelineAll)
+		v1.GET("video/timeline/recommend", api.VideoTimelineRecommend)
+		v1.GET("related/allvideo", api.RelatedAllVideo)
 
 		// 需要登录保护的
 		auth := v1.Group("")
