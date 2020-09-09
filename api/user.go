@@ -103,3 +103,36 @@ func UserRecord(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 云盘
+func UserCloud(c *gin.Context) {
+	var service service.UserCloudService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserCloud(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 云盘数据详情
+func UserCloudDetail(c *gin.Context) {
+	var service service.UserCloudDetailService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserCloudDetail(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 云盘歌曲删除
+func UserCloudDel(c *gin.Context) {
+	var service service.UserCloudDelService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserCloudDel(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
