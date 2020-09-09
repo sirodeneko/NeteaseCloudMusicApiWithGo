@@ -179,6 +179,10 @@ func NewRouter() *gin.Engine {
 		v1.GET("dj/program", api.DjProgram)
 		v1.GET("dj/program/detail", api.DjProgramDetail)
 		v1.GET("msg/private", api.MsgPrivate)
+		v1.GET("send/text", api.SendText)
+		v1.GET("msg/private/history", api.MsgPrivateHistory)
+		v1.GET("send/playlist", api.SendPlaylist)
+		v1.GET("msg/comments", api.MsgComments)
 
 		// 需要登录保护的
 		auth := v1.Group("")
