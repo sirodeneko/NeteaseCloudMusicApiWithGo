@@ -136,3 +136,14 @@ func UserCloudDel(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 用户电台
+func UserAudio(c *gin.Context) {
+	var service service.UserAudioService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.UserAudio(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
