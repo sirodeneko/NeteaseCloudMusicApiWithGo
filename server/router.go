@@ -183,6 +183,16 @@ func NewRouter() *gin.Engine {
 		v1.GET("msg/private/history", api.MsgPrivateHistory)
 		v1.GET("send/playlist", api.SendPlaylist)
 		v1.GET("msg/comments", api.MsgComments)
+		v1.GET("msg/forwards", api.MsgForwards)
+		v1.GET("msg/notices", api.MsgNotices)
+		v1.GET("setting", api.Setting)
+		v1.GET("album/list", api.AlbumList)
+		v1.GET("album/songsaleboard", api.AlbumSongsaleboard)
+		v1.GET("album/list/style", api.AlbumListStyle)
+		v1.GET("album/detail", api.AlbumDetail)
+		v1.GET("digitalAlbum/purchased", api.DigitalAlbumPurchased)
+		v1.GET("digitalAlbum/ordering", api.DigitalAlbumOrdering)
+		v1.GET("batch", api.Batch)
 
 		// 需要登录保护的
 		auth := v1.Group("")

@@ -59,3 +59,69 @@ func AlbumNew(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 数字专辑-新碟上架
+func AlbumList(c *gin.Context) {
+	var service service.AlbumListService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlbumList(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 数字专辑&数字单曲-榜单
+func AlbumSongsaleboard(c *gin.Context) {
+	var service service.AlbumSongsaleboardService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlbumSongsaleboard(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 数字专辑-语种风格馆
+func AlbumListStyle(c *gin.Context) {
+	var service service.AlbumListStyleService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlbumListStyle(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 数字专辑详情
+func AlbumDetail(c *gin.Context) {
+	var service service.AlbumDetailService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlbumDetail(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 我的数字专辑
+func DigitalAlbumPurchased(c *gin.Context) {
+	var service service.DigitalAlbumPurchasedService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.DigitalAlbumPurchased(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// 购买数字专辑
+func DigitalAlbumOrdering(c *gin.Context) {
+	var service service.DigitalAlbumOrderingService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.DigitalAlbumOrdering(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
