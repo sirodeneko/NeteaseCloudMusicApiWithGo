@@ -124,3 +124,14 @@ func Comment(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 歌曲楼层评论
+func CommentFloor(c *gin.Context) {
+	var service service.CommentFloorService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.CommentFloor(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

@@ -193,6 +193,8 @@ func NewRouter() *gin.Engine {
 		v1.GET("digitalAlbum/purchased", api.DigitalAlbumPurchased)
 		v1.GET("digitalAlbum/ordering", api.DigitalAlbumOrdering)
 		v1.GET("batch", api.Batch)
+		v1.GET("comment/floor", api.CommentFloor)
+		v1.GET("artist/songs", api.ArtistSongs)
 
 		// 需要登录保护的
 		auth := v1.Group("")

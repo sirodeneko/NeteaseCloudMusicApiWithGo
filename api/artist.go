@@ -92,3 +92,14 @@ func ArtistDesc(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+//歌手全部歌曲
+func ArtistSongs(c *gin.Context) {
+	var service service.ArtistSongsService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.ArtistSongs(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
